@@ -1,0 +1,84 @@
+.slider-container{
+    padding: 0;
+    color: aliceblue;
+}
+.trending-poster-container{
+    display: flex !important;
+}
+.poster-description{
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    width: 40%;
+    padding: 20px;
+}
+.trending-movie-title{
+    margin: 0;
+    margin-top: 10px;
+    font-size: 25px;
+    font-weight: bold;
+}
+.trending-tag-line{
+    margin: 0;
+    margin-top: 10px;
+    text-align: center;
+    color: gray;
+}
+
+.trending-overview-title{
+    margin: 0;
+    margin-top: 30px;
+    font-size: 20px;
+    font-weight: bold;
+    text-decoration: underline;
+    color: #a9a9a9;
+}
+.trending-movie-overview{
+    font-size: 15px;
+    height: 100px;
+    color: gray;
+    margin: 0;
+    margin-top: 10px;
+}
+.trailer-container{
+    display: flex;
+    align-items: center;
+    margin-top: 30px;
+    cursor: pointer;
+}
+.more-details{
+    padding: 15px 15px;
+    background-color: aliceblue;
+    border: none;
+    border-radius: 5px;
+    color: black;
+    font-size: 15px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: transform 0.3s ease-in-out;
+}
+.more-details-hover{
+    transform: scale(1.1);
+    background-color: aquamarine;
+}
+.trailer-text{
+    padding: 10px;
+    font-size: 20px;
+    font-weight: bold;
+}
+.trending-poster{
+    width: 700px;
+    height: auto;
+    border-radius: 5px;
+}
+.trending-poster::after{
+    opacity: 0.1;
+    background-image: linear-gradient(to right, transparent, black);
+}
+.slick-dots li button:before{
+    color: #a9a9a9;
+    font-size: 8px;
+}
+.slick-dots li.slick-active button:before{
+    color: azure;
+}

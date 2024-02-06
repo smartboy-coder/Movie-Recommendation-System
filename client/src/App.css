@@ -1,0 +1,12 @@
+.popup-content{
+    background-color: transparent;
+    border: none;
+    padding: 5px;
+}
+.slick-dots li button:before{
+    color: #a9a9a9;
+    font-size: 8px;
+}
+.slick-dots li.slick-active button:before{
+    color: azure;
+}

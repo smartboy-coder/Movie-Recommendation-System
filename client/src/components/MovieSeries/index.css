@@ -1,0 +1,148 @@
+.movie-details-container{
+    display: flex;
+    flex-direction: column;
+    background-color: #00050d;
+    overflow: auto;
+    padding: 0px 20px;
+}
+.categories-search-container{
+    display: flex;
+    align-items: flex-end;
+    justify-content: space-between;
+}
+.movie-category-container{
+    display: flex;
+    list-style-type: none;
+    border-radius: 10px;
+    padding: 0;
+    margin-top: 50px;
+    margin-bottom: 0px;
+}
+.category-btn{
+    background-color: transparent;
+    border: none;
+    border-radius: 5px 5px 0px 0px;
+    font-size: 20px;
+    padding: 10px;
+    color: rgb(105, 105, 128);
+    cursor: pointer;
+    font-family:Sans-serif;
+}
+.active-tab{
+    background-color: rgb(17, 21, 31);
+    color:azure;
+
+}
+.search-result{
+    font-size: 25px;
+    font-weight: 500;
+    color: rgb(105, 105, 128);
+    margin: 5px 0px;
+}
+.search-container{
+    background-color: #ffffff;
+    padding: 10px 15px;
+    margin: 5px 0px;
+    border: none;
+    border-radius: 5px;
+    display: flex;
+    align-items: center;
+    color: black;
+}
+.search-input{
+    color: black;
+    outline: none;
+    border: none;
+    font-size: 15px;
+}
+.search-input::placeholder{
+    color: black;
+}
+.loader-container{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+}
+.movies-container{
+    margin: 0;
+    margin-bottom: 69px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background-color: rgb(17, 21, 31);
+    border-radius: 0px 0px 10px 10px;
+    padding: 20px 0px;
+}
+.movies-list-container{
+    list-style-type: none;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    margin: 0;
+    padding: 0;
+}
+.not-found-container{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: 57vh;
+}
+.not-found-text{
+    font-size: 25px;
+    font-weight: bold;
+    color: #ffffff;
+}
+
+.poster-container{
+    width: 220px;
+    margin: 20px;
+}
+.poster-img{
+    width: 220px;
+    height: 330px;
+    border-radius: 10px;
+    transition: transform 0.3s ease-in-out;
+    cursor: pointer;
+}
+.poster-img:hover{
+    transform: scale(1.1);
+}
+.poster-title{
+    color: darkgray;
+    font-size: 20px;
+    text-align: center;
+}
+.page-container{
+    margin-right: 50px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.arrow{
+    background-color: rgb(105, 105, 128);
+    border-radius: 5px;
+    padding: 5px;
+    border-radius: 5px;
+    width: 15px;
+    height: 15px;
+    margin: 0px 5px;
+}
+.disable-arrow{
+    opacity: 0.3;
+}
+.page-btn{
+    border: none;
+    padding: 5px;
+    border-radius: 5px;
+    width: 25px;
+    height: 25px;
+    margin: 0px 5px;
+    cursor: pointer;
+}
+.active-page{
+    background-color: #00050d;
+    color: #ffffff;
+}

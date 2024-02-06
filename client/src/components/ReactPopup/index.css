@@ -1,0 +1,60 @@
+.popup-content{
+    background-color: transparent;
+    border: none;
+    padding: 5px;
+}
+.watch-btn{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: #00050d;
+    background-color: #ffffff;
+    border-radius: 50%;
+    font-size: 30px;
+    padding: 10px;
+    border: none;
+    outline: none;
+    cursor: pointer;
+    transition: transform 0.3s ease-in-out;
+    margin-left: 100px;
+}
+.watch-btn:hover{
+    transform: scale(1.1);
+    background-color: aqua;
+}
+.trigger-button{
+    background-color: transparent;
+    border: none;
+    border-radius: 5px;
+    margin-bottom: 10px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 25px;
+    cursor: pointer;
+}
+.close-icon{
+    color: #ffffff;
+    font-size: 40px;
+    animation: scaleAnimation 1s ease-in-out;
+}
+@keyframes scaleAnimation {
+  0% {
+    transform: translateY(-40px);
+  }
+  100% {
+    transform: translateY(0);
+  }
+}
+.close-icon:hover{
+    color: red;
+}
+.video-player-container{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+.video-player{
+    border: 1px solid #ffffff;
+    width: fit-content;
+}
