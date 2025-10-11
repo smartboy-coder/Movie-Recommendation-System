@@ -3,21 +3,8 @@ import 'slick-carousel/slick/slick.css'
 import 'slick-carousel/slick/slick-theme.css'
 import { useEffect, useState } from 'react'
 import ReactPopUp from "../ReactPopup";
-import {
-    SliderContainer,
-    Loader,
-    TrendingPosterContainer,
-    PosterDescription,
-    TrendingMovieTitle,
-    TrendingMovieTagline,
-    TrendingMovieOverviewTitle,
-    TrendingMovieOverview,
-    TrailerDetailsContainer,
-    MoreDetailsButton,
-    TrailerText,
-    TrendingPoster,
-    MoreDetailsLink
-} from './styledComponents'
+import { TailSpin } from "react-loader-spinner";
+import {Link} from 'react-router-dom'
 
 const API_KEY = 'c7bcfaf589024c0a81002dd112a1d6c5'
 const basePath = 'https://image.tmdb.org/t/p/w500/'
@@ -84,41 +71,49 @@ const Trending = (props) => {
     }, [movieIds]);
 
     return (
-        <SliderContainer>
-            {
-                isLoading ? <Loader color="#ffffff" /> : (
-                    <Slider {...TrendingMovieSettings}>
-                        {
-                            trendingMovieDetails.map((movie) => {
-                                return (
-                                    <TrendingPosterContainer key={movie.id}>
-                                        <PosterDescription>
-                                            <TrendingMovieTitle>{movie.title}</TrendingMovieTitle>
-                                            <TrendingMovieTagline >{movie.tagline}</TrendingMovieTagline>
-                                            <TrendingMovieOverviewTitle >Overview</TrendingMovieOverviewTitle>
-                                            <TrendingMovieOverview >{movie.overview}</TrendingMovieOverview>
-                                            <TrailerDetailsContainer>
-                                                <MoreDetailsLink to={`/movie/details/${movie.id}`}>
-                                                    <MoreDetailsButton type="button" >
-                                                        More Details
-                                                    </MoreDetailsButton>
-                                                </MoreDetailsLink>
-                                                <ReactPopUp videoId={movie.videoId} />
-                                                <TrailerText>Watch Trailer</TrailerText>
-                                            </TrailerDetailsContainer>
-                                        </PosterDescription>
-                                        <TrendingPoster alt={movie.title} src={movie.image} />
-                                    </TrendingPosterContainer>
+        <ul className="p-0 text-[aliceblue]">
+      {isLoading ? (
+        <TailSpin color="#ffffff" />
+      ) : (
+        <Slider {...TrendingMovieSettings}>
+          {trendingMovieDetails.map((movie) => (
+            <li key={movie.id} className="!flex">
+              <div className="flex flex-col items-start w-2/5 p-5">
+                <p className="m-0 mt-2.5 text-[25px] font-bold">{movie.title}</p>
+                <p className="m-0 mt-2.5 text-center text-gray-400">{movie.tagline}</p>
+                <p className="m-0 mt-[30px] text-[20px] font-bold underline text-[#a9a9a9]">
+                  Overview
+                </p>
+                <p className="m-0 mt-2.5 text-[15px] text-gray-400 h-[100px]">
+                  {movie.overview.length>300?`${movie.overview.slice(0,300)} ...`:movie.overview}
+                </p>
+                <div className="flex items-center mt-[30px] cursor-pointer">
+                  <Link
+                    to={`/movie/details/${movie.id}`}
+                    className="text-black no-underline"
+                  >
+                    <button
+                      type="button"
+                      className="px-4 py-[15px] mr-[100px] bg-blue-200 text-black font-bold text-[15px] rounded-md border-none transition-transform duration-300 ease-in-out hover:scale-110 hover:bg-blue-300"
+                    >
+                      More Details
+                    </button>
+                  </Link>
+                  <ReactPopUp videoId={movie.videoId} />
+                  <p className="p-[10px] text-[20px] font-bold">Watch Trailer</p>
+                </div>
+              </div>
 
-                                )
-                            }
-                            )
-                        }
-                    </Slider>
-                )
-            }
-
-        </SliderContainer>
+              <img
+                alt={movie.title}
+                src={movie.image}
+                className="w-[700px] h-auto rounded-md"
+              />
+            </li>
+          ))}
+        </Slider>
+      )}
+    </ul>
     )
 }
 

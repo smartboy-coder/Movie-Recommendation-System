@@ -1,31 +1,11 @@
 import { useState, useEffect, useRef } from 'react';
 import Header from '../Header';
-import {
-    MovieSeriesContainer,
-    CategoriesSearchContainer,
-    SearchResult,
-    SearchContainer,
-    SearchInput,
-    SearchIcon,
-    LoaderContainer,
-    Loader,
-    MovieSeriesBox,
-    MovieSeriesListContainer,
-    NotFoundContainer,
-    NotFoundImage,
-    NotFoundText,
-    PosterContainer,
-    PosterImage,
-    PosterTitle,
-    PageContainer,
-    LeftArrowButton,
-    RightArrowButton,
-    PageButton,
-    MovieCategory,
-    PosterLink
-} from './styledComponents'
-import { useNavigate } from 'react-router-dom';
-import Cookies from 'js-cookie';
+import { TailSpin } from 'react-loader-spinner';
+import { AiOutlineLeft, AiOutlineRight, AiOutlineSearch } from 'react-icons/ai';
+import { CiFileOff } from 'react-icons/ci'
+import {Link} from 'react-router-dom'
+// import { useNavigate } from 'react-router-dom';
+// import Cookies from 'js-cookie';
 
 const API_KEY = 'c7bcfaf589024c0a81002dd112a1d6c5'
 const basePath = 'https://image.tmdb.org/t/p/w500/'
@@ -44,13 +24,13 @@ const MovieSeries = (props) => {
     const { route, category } = props
     const filmCategory = `${filmCategories[category]} ${filmCategories[route]}`
 
-    const navigate = useNavigate()
-    const jwtToken = Cookies.get('jwt_token')
-    useEffect(() => {
-        if (jwtToken === undefined) {
-            navigate('/login', { replace: true })
-        }
-    }, [navigate, jwtToken])
+    // const navigate = useNavigate()
+    // const jwtToken = Cookies.get('jwt_token')
+    // useEffect(() => {
+    //     if (jwtToken === undefined) {
+    //         navigate('/login', { replace: true })
+    //     }
+    // }, [navigate, jwtToken])
 
     const [paginationDetails, setPaginationDetails] = useState({
         page: 1,
@@ -148,61 +128,111 @@ const MovieSeries = (props) => {
     return (
         <>
             <Header />
-            <MovieSeriesContainer>
-                <CategoriesSearchContainer>
-                    {
-                        !isSearch ? (<MovieCategory>{filmCategory}</MovieCategory>) : (
-                            <SearchResult>Results for "{searchInput}"</SearchResult>
-                        )
-                    }
-                    <SearchContainer>
-                        <SearchInput type='search' placeholder='search' onKeyDown={onSearchMovies} />
-                        <SearchIcon />
-                    </SearchContainer>
-                </CategoriesSearchContainer>
-                {
-                    isLoading ? (
-                        <LoaderContainer>
-                            <Loader color='#ffffff' />
-                        </LoaderContainer>)
-                        : (
-                            <MovieSeriesBox>
-                                <MovieSeriesListContainer>
-                                    {
-                                        getFilmDetails.length === 0 ? (
-                                            <NotFoundContainer>
-                                                <NotFoundImage />
-                                                <NotFoundText>No result found for "{searchInput}"</NotFoundText>
-                                            </NotFoundContainer>
-                                        ) : (
-                                            getFilmDetails.map(film => (
-                                                <PosterContainer key={film.id}>
-                                                    <PosterLink to={`/${route}/details/${film.id}`}>
-                                                        <PosterImage alt={film.title} src={film.imageUrl} />
-                                                    </PosterLink>
-                                                    <PosterTitle>{film.title}</PosterTitle>
-                                                </PosterContainer>
-                                            )
-                                            )
-                                        )
+            <div className="flex flex-col bg-[#00050d] overflow-auto px-5">
+                {/* Top Section - Category & Search */}
+                <div className="flex items-center mt-5 ml-auto">
+                    {!isSearch ? (
+                        <p className="text-[#aaa] text-[30px] font-bold mr-[300px] my-1">
+                            {filmCategory}
+                        </p>
+                    ) : (
+                        <p className="text-[25px] font-medium text-[rgb(105,105,128)] mr-[300px] my-1">
+                            Results for "{searchInput}"
+                        </p>
+                    )}
+                    <div className="flex items-center bg-white text-black px-4 py-2 rounded-md">
+                        <input
+                            type="search"
+                            placeholder="search"
+                            onKeyDown={onSearchMovies}
+                            value={searchInput}
+                            className="text-black text-[15px] outline-none border-none placeholder:text-black"
+                        />
+                        <AiOutlineSearch className="ml-2" />
+                    </div>
+                </div>
+
+                {/* Loader */}
+                {isLoading ? (
+                    <div className="flex justify-center items-center h-screen">
+                        <TailSpin color="#ffffff" width={50} height={50} />
+                    </div>
+                ) : (
+                    <div className="flex flex-col items-center mb-[69px] py-5 rounded-b-[10px]">
+                        {/* Movie List */}
+                        <ul className="flex flex-wrap justify-center list-none m-0 p-0">
+                            {getFilmDetails.length === 0 ? (
+                                <div className="flex flex-col justify-center items-center h-[57vh]">
+                                    <CiFileOff className="text-white text-[80px]" />
+                                    <p className="text-white text-[25px] font-bold">
+                                        No result found for "{searchInput}"
+                                    </p>
+                                </div>
+                            ) : (
+                                getFilmDetails.map((film) => (
+                                    <li key={film.id} className="w-[220px] m-5">
+                                        <Link to={`/${route}/details/${film.id}`}>
+                                            <img
+                                                alt={film.title}
+                                                src={film.imageUrl}
+                                                className="w-[220px] h-[330px] rounded-[10px] cursor-pointer transition-transform duration-300 ease-in-out hover:scale-110"
+                                            />
+                                        </Link>
+                                        <p className="text-gray-400 text-[20px] text-center mt-2">
+                                            {film.title}
+                                        </p>
+                                    </li>
+                                ))
+                            )}
+                        </ul>
+
+                        {/* Pagination */}
+                        {getFilmDetails.length !== 0 && (
+                            <div className="flex justify-center items-center mr-[50px] mt-4">
+                                {/* Left Arrow */}
+                                <AiOutlineLeft
+                                    onClick={paginationDetails.page > 1 ? decrementPageNumber : undefined}
+                                    className={`bg-[rgb(105,105,128)] rounded-[5px] w-[25px] h-[25px] m-[5px] p-[5px]
+                  ${paginationDetails.page > 1
+                                            ? 'opacity-100 text-white cursor-pointer'
+                                            : 'opacity-30 cursor-not-allowed'
+                                        }`}
+                                />
+
+                                {/* Page Numbers */}
+                                {paginationDetails.buttons.map((pageNumber) => (
+                                    <button
+                                        key={pageNumber}
+                                        type="button"
+                                        onClick={() => changepage(pageNumber)}
+                                        className={`w-[25px] h-[25px] m-[5px] rounded-[5px] text-[15px] font-medium cursor-pointer 
+                    ${paginationDetails.page === pageNumber
+                                                ? 'bg-white text-black'
+                                                : 'bg-[#5c5c5c] text-[#aaa]'
+                                            }`}
+                                    >
+                                        {pageNumber}
+                                    </button>
+                                ))}
+
+                                {/* Right Arrow */}
+                                <AiOutlineRight
+                                    onClick={
+                                        paginationDetails.page < paginationDetails.totalPages
+                                            ? incrementPageNumber
+                                            : undefined
                                     }
-                                </MovieSeriesListContainer>
-                                {
-                                    getFilmDetails.length !== 0 && (
-                                        < PageContainer>
-                                            <LeftArrowButton $ispagegreater={paginationDetails.page > 1} onClick={decrementPageNumber} />
-                                            {
-                                                paginationDetails.buttons.map(pageNumber =>
-                                                    <PageButton key={pageNumber} type='button' $ispageactive={paginationDetails.page === pageNumber} onClick={() => changepage(pageNumber)} >{pageNumber}</PageButton>
-                                                )
-                                            }
-                                            <RightArrowButton $ispagelesser={paginationDetails.page < paginationDetails.totalPages} onClick={incrementPageNumber} />
-                                        </PageContainer>)
-                                }
-                            </MovieSeriesBox>
-                        )
-                }
-            </MovieSeriesContainer >
+                                    className={`bg-[rgb(105,105,128)] rounded-[5px] w-[25px] h-[25px] m-[5px] p-[5px]
+                  ${paginationDetails.page < paginationDetails.totalPages
+                                            ? 'opacity-100 text-white cursor-pointer'
+                                            : 'opacity-30 cursor-not-allowed'
+                                        }`}
+                                />
+                            </div>
+                        )}
+                    </div>
+                )}
+            </div>
         </>
     )
 

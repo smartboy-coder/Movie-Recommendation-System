@@ -2,11 +2,11 @@ import { useEffect, useState } from 'react'
 import { RxDotFilled } from "react-icons/rx";
 import Slider from "react-slick";
 import { FaArrowAltCircleLeft } from "react-icons/fa";
+import { TailSpin } from "react-loader-spinner";
+import {Link} from 'react-router-dom'
 
-import { Cast, CastDetails, CastDetailsContainer, CastHeading, CastImage, CastName, DetailsContainer, DetailsLeftSection, DetailsRightSection, FilmDetailsContainer, FilmGenres, FilmImage, FilmName, FilmOverview, FilmOverviewTitle, FilmRuntime, FilmTagLine, HomeLink, HorizontalLine, PosterContainer, PosterImage, PosterLink, PosterTitle, SimilarMovieDetails, SimilarMoviesTitle, TrailerText } from './styledComponents'
 import ReactPopUp from '../ReactPopup';
-import { Loader, TrailerDetailsContainer } from '../Trending/styledComponents';
-import {  useLocation, useParams } from 'react-router-dom';
+import { useLocation, useParams } from 'react-router-dom';
 
 const basePath = "https://image.tmdb.org/t/p/w500/";
 const API_KEY = 'c7bcfaf589024c0a81002dd112a1d6c5';
@@ -117,65 +117,103 @@ const FilmDetails = () => {
         similarFilmDetails
     } = getFilmDetails
     return (
-        <FilmDetailsContainer>
-            {
-                isLoading ? <Loader color='#ffffff' /> : (
-                    <>
-                            <HomeLink to='/'><FaArrowAltCircleLeft color='gray' size={30} /></HomeLink>
+        <div className="flex flex-col bg-[#00050d] h-screen overflow-auto">
+            {isLoading ? (
+                <TailSpin color="#ffffff" />
+            ) : (
+                <div className='flex flex-col p-10'>
+                    {/* Back to Home Link */}
+                    <Link to="/" className="h-auto">
+                        <FaArrowAltCircleLeft color="gray" size={30} />
+                    </Link>
 
-                        <DetailsContainer>
-                            <DetailsLeftSection>
-                                <FilmImage alt={title} src={imageUrl} />
-                            </DetailsLeftSection>
-                            <DetailsRightSection>
-                                <FilmName>{title}</FilmName>
-                                <FilmTagLine>- {tagline}</FilmTagLine>
-                                <FilmOverviewTitle>Overview</FilmOverviewTitle>
-                                <FilmOverview>{overview}</FilmOverview>
-                                <FilmRuntime>{duration} <RxDotFilled /> {releaseYear} <RxDotFilled /> {languages} languages  </FilmRuntime>
-                                <FilmGenres>{genres}</FilmGenres>
-                                <TrailerDetailsContainer>
-                                    <ReactPopUp videoId={videoId} />
-                                    <TrailerText>Watch Trailer</TrailerText>
-                                </TrailerDetailsContainer>
-                            </DetailsRightSection>
+                    {/* Film Details Section */}
+                    <div className="flex mt-8">
+                        {/* Left Section */}
+                        <div className="flex flex-col items-center">
+                            <img
+                                alt={title}
+                                src={imageUrl}
+                                className="rounded-xl max-w-none w-[270px]"
+                            />
+                        </div>
 
-                        </DetailsContainer>
-                        <HorizontalLine color='#2b2b2b' />
-                        <CastDetailsContainer>
-                            <CastHeading>Cast</CastHeading>
-                            <CastDetails>
-                                {
-                                    cast.map(cast => (
-                                        <Cast>
-                                            <CastImage alt={cast.name} src={cast.image} />
-                                            <CastName>{cast.name}</CastName>
-                                        </Cast>
-                                    ))
-                                }
-                            </CastDetails>
-                        </CastDetailsContainer>
-                        <HorizontalLine color='#2b2b2b' />
-                        <SimilarMoviesTitle>Similar Movies</SimilarMoviesTitle>
-                        <SimilarMovieDetails>
-                            <Slider {...TopMovieSettings}>
-                                {
-                                    similarFilmDetails.map(film => (
-                                        <PosterContainer key={film.id}>
-                                            <PosterLink to={`/${route}/details/${film.id}`}>
-                                                <PosterImage alt={film.title} src={film.imageUrl} />
-                                            </PosterLink>
-                                            <PosterTitle>{film.title}</PosterTitle>
-                                        </PosterContainer>
-                                    )
-                                    )
-                                }
-                            </Slider>
-                        </SimilarMovieDetails>
-                    </>
-                )
-            }
-        </FilmDetailsContainer>
+                        {/* Right Section */}
+                        <div className="ml-10">
+                            <p className="text-white text-[40px] font-medium">{title}</p>
+                            <p className="text-gray-400 mt-2">- {tagline}</p>
+                            <p className="text-[#a9a9a9] text-[20px] font-bold underline mt-4">
+                                Overview
+                            </p>
+                            <p className="text-gray-400 text-[15px] mt-2 h-[100px] overflow-y-auto">
+                                {overview}
+                            </p>
+
+                            <p className="text-[#aaa] mt-3 flex items-center gap-1">
+                                {duration} <RxDotFilled /> {releaseYear} <RxDotFilled />{" "}
+                                {languages} languages
+                            </p>
+
+                            <p className="text-[#aaa] mt-1">{genres}</p>
+
+                            {/* Trailer Section */}
+                            <div className="flex items-center mt-6">
+                                <ReactPopUp videoId={videoId} />
+                                <p className="text-white text-[20px] font-bold p-2">
+                                    Watch Trailer
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+
+                    {/* Divider */}
+                    <hr className="border border-[#2b2b2b] mt-10" />
+
+                    {/* Cast Section */}
+                    <div className="flex flex-col items-start text-white w-full flex-wrap">
+                        <h1 className="text-white font-bold text-[25px] mt-5">Cast</h1>
+                        <ul className="flex flex-wrap list-none">
+                            {cast.map((actor) => (
+                                <li key={actor.name} className="text-center m-[10px]">
+                                    <img
+                                        alt={actor.name}
+                                        src={actor.image}
+                                        className="w-[190px] rounded-xl"
+                                    />
+                                    <p className="text-gray-400 text-[20px] text-center mt-2">
+                                        {actor.name}
+                                    </p>
+                                </li>
+                            ))}
+                        </ul>
+                    </div>
+
+                    {/* Divider */}
+                    <hr className="border border-[#2b2b2b] mt-10" />
+
+                    {/* Similar Movies Section */}
+                    <h1 className="text-white font-bold text-[25px] mt-5">Similar Movies</h1>
+                    <div className="p-10">
+                        <Slider {...TopMovieSettings}>
+                            {similarFilmDetails.map((film) => (
+                                <div key={film.id} className="w-[220px] m-[10px]">
+                                    <Link to={`/${route}/details/${film.id}`}>
+                                        <img
+                                            alt={film.title}
+                                            src={film.imageUrl}
+                                            className="w-[220px] h-[330px] rounded-xl cursor-pointer transition-transform duration-300 ease-in-out hover:scale-110"
+                                        />
+                                    </Link>
+                                    <p className="text-gray-400 text-[20px] text-center w-[220px] mt-2">
+                                        {film.title}
+                                    </p>
+                                </div>
+                            ))}
+                        </Slider>
+                    </div>
+                </div>
+            )}
+        </div>
     )
 
 }

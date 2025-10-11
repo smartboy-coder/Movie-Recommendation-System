@@ -3,17 +3,6 @@ import { Link, useNavigate } from 'react-router-dom'
 import Cookies from 'js-cookie';
 import { FaUser } from "react-icons/fa";
 import { RiLockPasswordFill } from "react-icons/ri";
-import {
-  LoginPageContainer,
-  LoginTitle,
-  LoginForm,
-  FormGroup,
-  Label,
-  InputContainer,
-  Input,
-  Button,
-  NavigateText
-} from './styledComponents';
 
 const Login = () => {
   const navigate = useNavigate()
@@ -32,7 +21,7 @@ const Login = () => {
     }));
   };
 
-  const [submitError,setSubmitError] = useState({isError:false,errorMsg:''})
+  const [submitError, setSubmitError] = useState({ isError: false, errorMsg: '' })
 
 
   const handleSubmit = async (e) => {
@@ -47,11 +36,11 @@ const Login = () => {
       })
       const data = await response.json()
       if (response.ok) {
-        Cookies.set('jwt_token',data.jwtToken,{expires: 1})
-        navigate('/',{replace:true})
+        Cookies.set('jwt_token', data.jwtToken, { expires: 1 })
+        navigate('/', { replace: true })
       }
       else {
-        setSubmitError({isError:true,errorMsg:data.errorMsg})
+        setSubmitError({ isError: true, errorMsg: data.errorMsg })
       }
     }
     catch (error) {
@@ -60,46 +49,77 @@ const Login = () => {
   };
 
   return (
-    <LoginPageContainer>
-      <LoginForm onSubmit={handleSubmit}>
-        <LoginTitle>Login</LoginTitle>
+    <div className="flex justify-center items-center h-screen bg-[#d6d6d6] font-['PT_Serif',serif]">
+      <form
+        onSubmit={handleSubmit}
+        className="bg-white rounded-2xl shadow-[0_2px_4px_rgba(0,0,0,0.1),0_8px_16px_rgba(0,0,0,0.1)] p-5 w-full max-w-[500px]"
+      >
+        <h2 className="text-[30px] font-bold font-['Outfit',sans-serif] text-center mt-5">
+          Login
+        </h2>
 
-        <FormGroup>
-          <Label htmlFor="username">Username</Label>
-          <InputContainer>
+        {/* Username Field */}
+        <div className="mb-4">
+          <label htmlFor="username" className="block mb-2">
+            Username
+          </label>
+          <div className="flex items-center w-full box-border border-b-2 border-gainsboro p-1.5">
             <FaUser />
-            <Input
+            <input
               type="text"
               id="username"
               name="username"
               value={formData.username}
               onChange={handleChange}
-              placeholder='Enter Your Username'
+              placeholder="Enter Your Username"
               required
+              className="ml-2 w-full border-none outline-none font-['PT_Serif',serif]"
             />
-          </InputContainer>
-        </FormGroup>
+          </div>
+        </div>
 
-        <FormGroup>
-          <Label htmlFor="password">Password</Label>
-          <InputContainer>
+        {/* Password Field */}
+        <div className="mb-4">
+          <label htmlFor="password" className="block mb-2">
+            Password
+          </label>
+          <div className="flex items-center w-full box-border border-b-2 border-gainsboro p-1.5">
             <RiLockPasswordFill />
-            <Input
+            <input
               type="password"
               id="password"
               name="password"
               value={formData.password}
               onChange={handleChange}
-              placeholder='Enter Your Password'
+              placeholder="Enter Your Password"
               required
+              className="ml-2 w-full border-none outline-none font-['PT_Serif',serif]"
             />
-          </InputContainer>
-        </FormGroup>
-        <Button type="submit">Login</Button>
-        <NavigateText>Don't Have an account? <Link to='/signup'>sign up</Link></NavigateText>
-        {submitError.isError && <p>{submitError.errorMsg}</p>}
-      </LoginForm>
-    </LoginPageContainer>
+          </div>
+        </div>
+
+        {/* Submit Button */}
+        <button
+          type="submit"
+          className="bg-gray-500 text-white py-2 px-4 rounded cursor-pointer w-full text-[18px] hover:bg-[#80809f]"
+        >
+          Login
+        </button>
+
+        {/* Navigation Text */}
+        <p className="text-center mt-3">
+          Don't have an account?{" "}
+          <Link to="/signup" className="text-blue-600 underline">
+            Sign Up
+          </Link>
+        </p>
+
+        {/* Error Message */}
+        {submitError.isError && (
+          <p className="text-center text-red-600 mt-2">{submitError.errorMsg}</p>
+        )}
+      </form>
+    </div>
   );
 };
 
