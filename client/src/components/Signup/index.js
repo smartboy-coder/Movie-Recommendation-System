@@ -37,17 +37,16 @@ const SignUp = () => {
       if (response.ok) {
         const data = await response.json()
         setRegister({ isSubmit: true, message: data.message, isSuccess: data.isRegisteredSuccessful })
-        console.log(register.isSuccess)
         if (data.isRegisteredSuccessful) {
           setTimeout(() => {
             navigate('/login', { replace: true })
           }, 2000);
         }
       } else {
-        console.log('Error Submitting Form Data:', response.statusText);
+        setRegister({ isSubmit: true, message: response.statusText || 'Registration failed', isSuccess: false })
       }
     } catch (error) {
-      console.error('Error Submitting Form Data:', error.message);
+      setRegister({ isSubmit: true, message: error.message || 'Registration failed', isSuccess: false })
     }
 
 

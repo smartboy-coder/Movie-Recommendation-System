@@ -44,7 +44,7 @@ const Login = () => {
       }
     }
     catch (error) {
-      console.log('Error Submitting Form Data:', error.message);
+      setSubmitError({ isError: true, errorMsg: error.message || 'Something went wrong' })
     }
   };
 
