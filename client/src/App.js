@@ -5,10 +5,12 @@ import './App.css'
 import Login from './components/Login'
 import SignUp from './components/Signup'
 import FilmDetails from './components/FilmDetails'
+import ScrollToTop from './components/ScrollToTop'
 
 const App = () => {
   return (
     <>
+      <ScrollToTop />
       <Routes>
         <Route path='/signup' element={<SignUp />} />
         <Route path='/login' element={<Login />} />

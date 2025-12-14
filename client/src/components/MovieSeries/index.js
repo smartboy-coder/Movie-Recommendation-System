@@ -1,4 +1,4 @@
-import React, { useState, useMemo } from 'react';
+import React, { useState, useMemo, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 import Header from '../Header';
 import { TailSpin } from 'react-loader-spinner';
@@ -39,6 +39,11 @@ const MovieSeries = (props) => {
     const data = isSearch ? searchData : topData
     const error = isSearch ? searchError : topError
 
+    useEffect(() => {
+        setSearchInput('')
+        setPageNumber(1)
+    }, [route, category])
+
     const filmDetails = useMemo(() => {
         if (!data || !data.results) return []
         return data.results.map(eachFilm => ({
@@ -49,7 +54,11 @@ const MovieSeries = (props) => {
     }, [data, route])
 
     const totalPages = data?.total_pages ?? 0
-
+    
+    useEffect(() => {
+        window.scrollTo({ top: 0, left: 0, behavior: 'auto' })
+    }, [pageNumber])
+    
 
     return (
         <>
@@ -70,7 +79,7 @@ const MovieSeries = (props) => {
                         <input
                             type="search"
                             placeholder="search"
-                            onChange={(e) => setSearchInput(e.target.value)}
+                            onChange={(e) => { setSearchInput(e.target.value); setPageNumber(1); }}
                             value={searchInput}
                             className="text-black text-[15px] outline-none border-none placeholder:text-black"
                         />
