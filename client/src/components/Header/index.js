@@ -19,15 +19,11 @@ const Header = () => {
 
     return (
         <header className="sticky top-0 z-30 flex items-center px-8 py-4 bg-[#00050df5] border-b-2 border-black shadow-[0_0_20px_20px_#00050df5]">
-            {/* Title Section */}
             <div className="flex items-center justify-center text-white">
                 <FaCirclePlay size={28} />
                 <h2 className="mx-2 font-serif font-bold text-[25px]">FilmyPalace</h2>
             </div>
-
-            {/* Navigation Section */}
             <nav className="flex items-center ml-auto font-[Amazon Ember,Arial,sans-serif]">
-                {/* Home Link */}
                 <NavLink
                     to="/"
                     className={({ isActive }) =>
@@ -39,8 +35,6 @@ const Header = () => {
                 >
                     Home
                 </NavLink>
-
-                {/* Movies Dropdown */}
                 <div
                     className={`mr-[10px] rounded-t-md ${movieBoxHover ? "bg-[#202c3fd0]" : "bg-transparent"
                         }`}
@@ -62,12 +56,10 @@ const Header = () => {
                                 }`}
                         />
                     </div>
-
-                    {/* Dropdown Menu */}
                     <div
                         className={`absolute flex flex-col rounded-b-md shadow-[0_0_2px_2px_#00050df5] bg-[#202c3fd0] transition-all duration-300 ease-in-out ${movieBoxHover
-                                ? "opacity-100 translate-y-0 visible"
-                                : "opacity-0 -translate-y-2 invisible"
+                            ? "opacity-100 translate-y-0 visible"
+                            : "opacity-0 -translate-y-2 invisible"
                             }`}
                     >
                         <NavLink
@@ -91,7 +83,6 @@ const Header = () => {
                     </div>
                 </div>
 
-                {/* TV Series Dropdown */}
                 <div
                     className={`mr-[10px] rounded-t-md ${tvBoxHover ? "bg-[#202c3fd0]" : "bg-transparent"
                         }`}
@@ -113,12 +104,10 @@ const Header = () => {
                                 }`}
                         />
                     </div>
-
-                    {/* Dropdown Menu */}
                     <div
                         className={`absolute flex flex-col rounded-b-md shadow-[0_0_2px_2px_#00050df5] bg-[#202c3fd0] transition-all duration-300 ease-in-out ${tvBoxHover
-                                ? "opacity-100 translate-y-0 visible"
-                                : "opacity-0 -translate-y-2 invisible"
+                            ? "opacity-100 translate-y-0 visible"
+                            : "opacity-0 -translate-y-2 invisible"
                             }`}
                     >
                         <NavLink
@@ -143,7 +132,6 @@ const Header = () => {
                 </div>
             </nav>
 
-            {/* Logout Button */}
             <button
                 type="button"
                 onClick={onLogout}

@@ -59,4 +59,4 @@ app.post('/login', async (req, res) => {
 })
 
 const PORT = 5000
-app.listen(PORT, () => console.log(`Server Listening on the Port : ${PORT}`))
+app.listen(PORT, () => console.info(`Server Listening on the Port : ${PORT}`))
